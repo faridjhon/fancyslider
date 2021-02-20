@@ -4,6 +4,17 @@ const galleryHeader = document.querySelector('.gallery-header');
 const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
+
+
+
+// search Enter
+document.getElementById("search")
+  .addEventListener("keypress", function (event) {
+    if (event.key == "Enter") {
+      searchBtn.click();
+    }
+  });
+
 // selected image 
 let sliders = [];
 
@@ -45,10 +56,10 @@ const selectItem = (event, img) => {
     sliders.push(img);
   } else {
     element.classList.remove("added");
-    // sliders.splice(item, 1);
+    sliders.splice(item, 1);
     alert('Hey, Already added !')
   }
-}
+};
 var timer
 const createSlider = () => {
   // check slider image length
@@ -69,7 +80,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value ;
+  const duration = document.getElementById('duration').value || 1000 ;
 
   if (duration < 1) {
     alert("Please Enter a Positive Value");
