@@ -31,7 +31,7 @@ const showImages = (images) => {
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data => showImages(data.hitS))
+    .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 }
 
@@ -44,14 +44,16 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
+    element.classList.remove("added");
+    // sliders.splice(item, 1);
     alert('Hey, Already added !')
   }
 }
 var timer
 const createSlider = () => {
   // check slider image length
-  if (sliders.length < 2) {
-    alert('Select at least 2 image.')
+  if (sliders.length < 3) {
+    alert('Select at least 3 image.')
     return;
   }
   // crate slider previous next area
@@ -67,7 +69,13 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  const duration = document.getElementById('duration').value ;
+
+  if (duration < 1) {
+    alert("Please Enter a Positive Value");
+    return;
+  } 
+
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -115,7 +123,7 @@ searchBtn.addEventListener('click', function () {
   const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
-})
+});
 
 sliderBtn.addEventListener('click', function () {
   createSlider()
